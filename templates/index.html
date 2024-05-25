@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Web App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .cta {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .cta button {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            border-radius: 5px;
+        }
+        .cta button:hover {
+            background-color: #d35400;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            margin-top: 30px;
+            color: #333;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: #f9f9f9;
+        }
+        .result {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .result div {
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        h3 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        p {
+            white-space: pre-wrap;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function previewImage() {
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+            
+            reader.addEventListener("load", function () {
+                document.getElementById('imagePreview').src = reader.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const imagePath = "{{ image_path }}";
+            if (imagePath) {
+                document.getElementById('imagePreview').src = "{{ url_for('static', filename=image_path) }}";
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>OCR Web App</h1>
+    </div>
+    <div class="container">
+        <div class="cta">
+            <h2>Get OCR results in seconds!</h2>
+            <button onclick="document.querySelector('input[type=file]').click()">Upload Image</button>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" style="display: none;" onchange="previewImage()">
+            <input type="submit" value="Result">
+        </form>
+        <h2>Uploaded Image:</h2>
+        <img id="imagePreview" src="#" alt="Uploaded Image" style="display: none;">
+        {% if image_path %}
+            <script>
+                document.getElementById('imagePreview').src = "{{ url_for('static', filename=image_path) }}";
+                document.getElementById('imagePreview').style.display = 'block';
+            </script>
+        {% endif %}
+        {% if tesseract_text or easyocr_text or ocrmypdf_text %}
+            <div class="result">
+                <div>
+                    <h3>Tesseract OCR Output:</h3>
+                    <p>{{ tesseract_text }}</p>
+                </div>
+                <div>
+                    <h3>EasyOCR Output:</h3>
+                    <p>{{ easyocr_text }}</p>
+                </div>
+                <div>
+                    <h3>OCRmyPDF Output:</h3>
+                    <p>{{ ocrmypdf_text }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
