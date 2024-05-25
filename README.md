@@ -2,18 +2,8 @@
 
 To run this application, simply execute the app.py file. Then, navigate to http://127.0.0.1:5000 in your web browser and start uploading your images. The techniques used are:
 
-Pyterrest is likely a custom or specialized tool for image search and retrieval. While specific details about the models used by Pyterrest are not widely known, such tools typically utilize:
+PyTesseract is a Python wrapper for Google's Tesseract-OCR Engine, which allows for easy integration of Optical Character Recognition (OCR) capabilities in Python applications. When using PyTesseract, the process begins by loading an image file containing the text to be extracted. The image can be pre-processed to enhance text recognition accuracy, such as converting it to grayscale or applying thresholding techniques. PyTesseract then calls the Tesseract engine, which uses a combination of machine learning models, specifically LSTM (Long Short-Term Memory) networks, to analyze the image and recognize the text within it. The recognized text is then output as a string, which can be further processed or stored as needed. This makes PyTesseract a powerful tool for converting printed or handwritten text in images into editable and searchable digital text.
 
-    Convolutional Neural Networks (CNNs): For image feature extraction and analysis.
-    Pre-trained models: Such as ResNet, VGG, or Inception, for identifying and categorizing objects within images.
-    These models help in accurately retrieving similar images based on visual content.
+EasyOCR is an open-source Optical Character Recognition (OCR) tool that simplifies the process of extracting text from images. It utilizes advanced deep learning models to achieve high accuracy in text recognition. When an image is provided, EasyOCR first detects the regions containing text using a Convolutional Neural Network (CNN). Once the text regions are identified, these regions are then processed by a Recurrent Neural Network (RNN), specifically a CRNN (Convolutional Recurrent Neural Network), which recognizes the characters and words within these regions. The recognized text is then returned in a structured format, which can be used for various applications such as data extraction, document digitization, and text analysis. EasyOCR supports multiple languages and scripts, making it a versatile and powerful tool for OCR tasks.
 
-easyocr uses a combination of advanced deep learning models to perform OCR. Specifically, it employs:
-
-    Convolutional Neural Networks (CNNs): For detecting text regions within images.
-    Recurrent Neural Networks (RNNs): For sequence prediction and recognizing text within detected regions.
-    CRNN (Convolutional Recurrent Neural Network): A model that combines CNNs and RNNs to effectively handle both image feature extraction and sequential text recognition, making it robust for various languages and scripts.
-
-ocrmypdf integrates several OCR engines to add text layers to PDFs. The primary model used is:
-
-    Tesseract OCR: An open-source OCR engine developed by Google. Tesseract uses LSTM (Long Short-Term Memory) networks, which are a type of Recurrent Neural Network (RNN) suitable for recognizing text in images. This enables it to handle different fonts and styles within scanned documents, ensuring high accuracy in text recognition.
+OCRmyPDF is a tool designed to add an OCR text layer to PDF files, making them searchable and selectable. The process begins with the user providing a PDF file, which may contain scanned images of text. OCRmyPDF extracts these images and processes them using Tesseract OCR, a powerful OCR engine that utilizes Long Short-Term Memory (LSTM) networks for text recognition. Tesseract analyzes the images to detect and recognize text, converting it into a digital format. This recognized text is then embedded back into the original PDF as an invisible text layer, preserving the document's original appearance while enabling text search and selection. OCRmyPDF also supports additional features such as deskewing, optimizing file size, and maintaining the document structure, making it a comprehensive tool for enhancing the accessibility and functionality of scanned PDFs.
